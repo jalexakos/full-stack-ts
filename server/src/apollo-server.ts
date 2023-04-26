@@ -11,6 +11,7 @@ import * as express from "express"
 import { Server } from "http"
 import Db from "./db"
 import resolvers from "./resolvers"
+import { TwitterResolverContext } from "./resolvers"
 
 const SCHEMA = loadSchemaSync(GRAPHQL_SCHEMA_PATH, {
   loaders: [new GraphQLFileLoader()],
@@ -27,7 +28,7 @@ export async function createApolloServer(
       schema: SCHEMA,
       resolvers,
       }),
-    context: () => ({ db }),
+    context: (): TwitterResolverContext => ({ db }),
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
     ],
